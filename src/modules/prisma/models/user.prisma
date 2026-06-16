@@ -1,0 +1,19 @@
+// prisma/models/user.prisma
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  role       String   @default("CLIENTE")
+
+  companyId  String?
+  company    Company? @relation(fields: [companyId], references: [id])
+
+  analyses   Analysis[]
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("users")
+}
