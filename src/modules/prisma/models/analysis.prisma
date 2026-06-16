@@ -1,0 +1,25 @@
+// prisma/models/analysis.prisma
+
+enum AnalysisStatus {
+  DRAFT
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+}
+
+model Analysis {
+  id             String         @id @default(uuid())
+
+  title          String?
+  objective      String?
+  analysisType   String?
+  status         AnalysisStatus @default(DRAFT)
+
+  userId         String
+  user           User           @relation(fields: [userId], references: [id])
+
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("analyses")
+}
